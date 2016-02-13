@@ -1,7 +1,21 @@
-
-
 var correctColor = null;
 var gameOn = true;
+var colorSquares = null; //this will become a node list when the createColorDivs function is initialized;
+
+function createColorDivs(){
+	var colorContainer=document.getElementById("colorContainer");
+	
+	for (i=0;i<6;i++){
+		var colorDiv = document.createElement("div");
+		colorDiv.setAttribute("class","color-square");
+		colorContainer.appendChild(colorDiv);
+	}
+		/*Thomas's Note: at first I only had ' colorContainer.appendChild(colorDiv) ' inside the for-loop
+		and everything else outside of it. I realized I needed to create a node each time the loop ran. */
+	
+	//retrieves divs with "color-square" classes and creates node list
+	colorSquares = document.getElementsByClassName("color-square");
+}
 
 //creates an rgb property with random values, used for setting background colors of .color-square divs
 function setRGB() {
@@ -11,9 +25,6 @@ function setRGB() {
 	var num3 = randomNumber();
 	return "rgb(" + num1 + "," + num2 + "," + num3 + ")";
 }
-
-//retrieves divs with "color-square" classes
-var colorSquares = document.getElementsByClassName("color-square");
 
 //sets random background colors for each colorSquares
 
@@ -32,7 +43,7 @@ function setCorrectColor() {
 	correctColor = colorSquares[i].style.background;	
 	correctColorHTML.textContent = correctColor;
 }
-/*Creator's note: At first I thought of setting the correctColor first and then assigning that to one of
+/*Thomas's note: At first I thought of setting the correctColor first and then assigning that to one of
 the correctColors items, but I quickly realized that would not be an elegant solution */
 
 //checks to see if the item clicked corresponds to the correctColor variable;
@@ -56,7 +67,7 @@ function makeColorsClickable () {
 	}
 }
 
-//this function is used inside the newGame function, it removes the winner and loser classes
+//this function is used inside the init function, it removes the winner and loser classes
 function removeClasses() {
 	for (i=0; i<colorSquares.length; i++){
 		colorSquares[i].classList.remove("winner");
@@ -64,9 +75,10 @@ function removeClasses() {
 	}
 }
 
-function newGame() {
+function init() {
 	gameOn=true;
-	removeClasses();
+	createColorDivs();
+	removeClasses(); //this MUST be after createColorDivs();
 	setRGBforAll();
 	setCorrectColor();
 	makeColorsClickable();
@@ -74,6 +86,9 @@ function newGame() {
 
 //New Game Button
 var newGameButton = document.getElementById("newGame");
-newGameButton.addEventListener("click",newGame);
+newGameButton.addEventListener("click",init);
 
-newGame();
+
+
+
+init();
