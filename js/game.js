@@ -28,5 +28,21 @@ function newCorrectColor() {
 	correctColor = colorSquares[i].style.background;	
 	correctColorHTML.textContent = correctColor;
 }
+/*Creator's note: At first I thought of setting the correctColor first and then assigning that to one of
+the correctColors items, but I quickly realized that would not be an elegant solution */
 
 newCorrectColor();
+
+//checks to see if the item clicked corresponds to the correctColor variable;
+function checkColor() {
+	if (this.style.background===correctColor){
+		console.log("winner");
+	} else {
+		console.log("loser");
+	}
+}
+
+//adds a click event to each item of colorSquares, when clicked it runs the checkColor function
+for (i=0; i<colorSquares.length; i++){
+	colorSquares[i].addEventListener("click",checkColor);
+}
