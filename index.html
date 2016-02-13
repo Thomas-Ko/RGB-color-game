@@ -16,26 +16,30 @@
 <body>
 
 	<header>
-		<h1>RGB Color Game</h1>
+		<div class="container container-wider">
+			<h1>RGB Color Game</h1>
+		</div>
 	</header>
 
 	<nav>
-		<div class="class container">
+		<div class="container container-wider">
 			<button id="newGame" class="btn btn-default btn-lg">New Game</button>
+			<button id="easy" class="btn btn-default ">Easy</button>
+			<button id="medium" class="btn btn-default">Medium</button>
+			<button id="hard" class="btn btn-default ">Hard</button>
 		</div>
 
 	</nav>
 
 	<main>
-			<div class="class container">
+		<div class="container">
+			
+			<h2>Find: <span id=correctColor></span></h2>
 
+			<div class="row" id="colorContainer">
 				
-				<h2>Find: <span id=correctColor></span></h2>
-
-				<div class="row" id="colorContainer">
-					
-				</div>
-			</div> <!-- /.container -->
+			</div>
+		</div> <!-- /.container -->
 	</main>
 
 	

@@ -1,11 +1,12 @@
-var correctColor = null;
+var correctColor = null; 
 var gameOn = true;
-var colorSquares = null; //this will become a node list when the createColorDivs function is initialized;
+var colorAmt = 6; 
+var colorSquares = null; //this will become a node list when the createColorSquares function is initialized;
+var colorContainer=document.getElementById("colorContainer");
 
-function createColorDivs(){
-	var colorContainer=document.getElementById("colorContainer");
-	
-	for (i=0;i<6;i++){
+//creates the colors
+function createColorSquares(){	
+	for (i=0;i<colorAmt;i++){
 		var colorDiv = document.createElement("div");
 		colorDiv.setAttribute("class","color-square");
 		colorContainer.appendChild(colorDiv);
@@ -27,7 +28,6 @@ function setRGB() {
 }
 
 //sets random background colors for each colorSquares
-
 function setRGBforAll() {
 	for (i=0; i<colorSquares.length; i++) {
 		colorSquares[i].style.background= setRGB();
@@ -39,7 +39,7 @@ var correctColorHTML = document.getElementById("correctColor");
 
 //sets correctColor to one of the colorSquares' background color and displays on the html page 
 function setCorrectColor() {
-	var i = Math.floor((Math.random() * 5) + 0);
+	var i = Math.floor((Math.random() * (colorAmt-1)) + 0);
 	correctColor = colorSquares[i].style.background;	
 	correctColorHTML.textContent = correctColor;
 }
@@ -77,18 +77,37 @@ function removeClasses() {
 
 function init() {
 	gameOn=true;
-	createColorDivs();
-	removeClasses(); //this MUST be after createColorDivs();
-	setRGBforAll();
-	setCorrectColor();
-	makeColorsClickable();
+	colorContainer.innerHTML=""; //removes the color divs
+	createColorSquares(); //creates the color squares
+	removeClasses(); //removed any .winner or .loser classes
+	setRGBforAll(); // sets background colors for color divs
+	setCorrectColor(); // sets correctColor variable
+	makeColorsClickable(); //gives event listeners to all color squares
 }
 
 //New Game Button
 var newGameButton = document.getElementById("newGame");
 newGameButton.addEventListener("click",init);
 
+//difficulties
+var easy = document.getElementById("easy");
+var medium = document.getElementById("medium");
+var hard = document.getElementById("hard");
 
+easy.addEventListener("click", function() {
+	colorAmt=3;	
+	init();
+});
+
+medium.addEventListener("click", function() {
+	colorAmt=6;	
+	init();
+});
+
+hard.addEventListener("click", function() {
+	colorAmt=9;	
+	init();
+});
 
 
 init();
