@@ -9,11 +9,15 @@ header {
 
 h1 {
 	margin-top:0;
-	color:blue;
+}
+
+h2 {
+	color:white;
 }
 
 nav {
 	color:white;
+	background-color:gray;
 }
 
 .container {
@@ -22,13 +26,17 @@ nav {
 
 .color-square {
 	padding-bottom:30%;
-	border:0px solid black;
 	margin: 1.6666%;
 	width:30%;
 	float:left;
 	background: white;
+	border-radius: 5px;
 }
 
 .winner {
-	box-shadow: 0px 0px 30px rgba(0, 255, 0, 1);
+	box-shadow: 0px 0px 18px 5px rgba(255,255,255,1);
+}
+
+.loser {
+	opacity:0;
 }

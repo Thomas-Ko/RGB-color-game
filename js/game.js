@@ -43,7 +43,7 @@ function checkColor() {
 			this.classList.add("winner");	//adds .winner class which gives the div a nice glow
 			gameOn=false;	//turns game off
 		} else {
-			this.style.opacity="0.0"; //maybe not the most elegant solution to make div disappear
+			this.classList.add("loser"); //maybe not the most elegant solution(loser class changes opacity to 0 instead of disappear div);
 			console.log("false");
 		}
 	}
@@ -56,11 +56,24 @@ function makeColorsClickable () {
 	}
 }
 
-function reset() {
+//this function is used inside the newGame function, it removes the winner and loser classes
+function removeClasses() {
+	for (i=0; i<colorSquares.length; i++){
+		colorSquares[i].classList.remove("winner");
+		colorSquares[i].classList.remove("loser");
+	}
+}
+
+function newGame() {
 	gameOn=true;
+	removeClasses();
 	setRGBforAll();
 	setCorrectColor();
 	makeColorsClickable();
 }
 
-reset();
+//New Game Button
+var newGameButton = document.getElementById("newGame");
+newGameButton.addEventListener("click",newGame);
+
+newGame();
