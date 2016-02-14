@@ -4,6 +4,12 @@ var colorAmt = 6;
 var colorSquares = null; //this will become a node list when the createColorSquares function is initialized;
 var colorContainer=document.getElementById("colorContainer"); //this is where the colorDivs will be put in
 var correctColorHTML = document.getElementById("correctColor"); //this is where the correct color will be printed
+var difficultyList = document.getElementsByClassName("difficulty"); //this stores a nodelist of the easy,medium,hard buttons
+//buttons
+var newGameButton = document.getElementById("newGame");
+var easyBtn = document.getElementById("easy");
+var mediumBtn = document.getElementById("medium");
+var hardBtn = document.getElementById("hard");
 
 //creates the colors
 function createColorSquares(){	
@@ -75,6 +81,45 @@ function removeClasses() {
 	}
 }
 
+//this function gives the clicked difficulty button the .btn-selected class and removes it from the others
+function selectBtn(btnName) {
+	for (i=0;i<difficultyList.length;i++){
+		difficultyList[i].classList.remove("btn-selected");
+	}
+	btnName.classList.add("btn-selected");
+}
+
+/*Thomas Note: I originally didn't want to use the btnName parameter in the selectBtn function and instead just use the this keyword [ so it would look like
+this.classList.add("btn-selected");  ] but that wouldn't work because the selectBtn function is invoked inside another function and that function is part of an 
+event listener, and the this would be pointing outside of the scope I wanted. Had I not included this selectBtn function inside of another function and instead just used 
+selectBtn as the function for the event listener [so it would look something like   easyBtn.addEventListener("click",selectBtn); ], I could've actually used 
+the this keyword how I wanted and not have to use a parameter but I can't do that since I still have to run the other functions on the click event. Using the parameter was 
+an easy solution. Boy, was this note a tad too long.*/
+
+
+//Event Listeners for buttons
+newGameButton.addEventListener("click",init);
+
+easyBtn.addEventListener("click", function() {
+	var newthis = this;
+	colorAmt=3;	
+	selectBtn(easyBtn);
+	init();
+});
+
+mediumBtn.addEventListener("click", function() {
+	colorAmt=6;	
+	selectBtn(mediumBtn);
+	init();
+});
+
+hardBtn.addEventListener("click", function() {
+	colorAmt=9;	
+	selectBtn(hardBtn);
+	init();
+});
+
+
 //initializes the game
 function init() {
 	gameOn=true;
@@ -85,30 +130,5 @@ function init() {
 	setCorrectColor(); // sets correctColor variable
 	makeColorsClickable(); //gives event listeners to all color squares
 }
-
-//New Game Button
-var newGameButton = document.getElementById("newGame");
-newGameButton.addEventListener("click",init);
-
-//difficulties
-var easy = document.getElementById("easy");
-var medium = document.getElementById("medium");
-var hard = document.getElementById("hard");
-
-easy.addEventListener("click", function() {
-	colorAmt=3;	
-	init();
-});
-
-medium.addEventListener("click", function() {
-	colorAmt=6;	
-	init();
-});
-
-hard.addEventListener("click", function() {
-	colorAmt=9;	
-	init();
-});
-
 
 init();
