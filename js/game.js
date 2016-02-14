@@ -2,7 +2,8 @@ var correctColor = null;
 var gameOn = true;
 var colorAmt = 6; 
 var colorSquares = null; //this will become a node list when the createColorSquares function is initialized;
-var colorContainer=document.getElementById("colorContainer");
+var colorContainer=document.getElementById("colorContainer"); //this is where the colorDivs will be put in
+var correctColorHTML = document.getElementById("correctColor"); //this is where the correct color will be printed
 
 //creates the colors
 function createColorSquares(){	
@@ -12,7 +13,8 @@ function createColorSquares(){
 		colorContainer.appendChild(colorDiv);
 	}
 		/*Thomas's Note: at first I only had ' colorContainer.appendChild(colorDiv) ' inside the for-loop
-		and everything else outside of it. I realized I needed to create a node each time the loop ran. */
+		and everything else outside of it. I realized I needed to create a div each time the loop ran. If I hadn't,
+		I would have just been appending the same one div over and over and not actually appending a new div*/
 	
 	//retrieves divs with "color-square" classes and creates node list
 	colorSquares = document.getElementsByClassName("color-square");
@@ -27,29 +29,27 @@ function setRGB() {
 	return "rgb(" + num1 + "," + num2 + "," + num3 + ")";
 }
 
-//sets random background colors for each colorSquares
+//sets random background colors for each node in colorSquares
 function setRGBforAll() {
 	for (i=0; i<colorSquares.length; i++) {
 		colorSquares[i].style.background= setRGB();
 	}
 }
 
-//retrieves the span tag with id of correctColor, this is where the correct color will be printed
-var correctColorHTML = document.getElementById("correctColor"); 
-
-//sets correctColor to one of the colorSquares' background color and displays on the html page 
+//sets correctColor to one of the colored squares' background color and displays on the html page 
 function setCorrectColor() {
 	var i = Math.floor((Math.random() * (colorAmt-1)) + 0);
-	correctColor = colorSquares[i].style.background;	
+	correctColor = colorSquares[i].style.backgroundColor;	
 	correctColorHTML.textContent = correctColor;
 }
 /*Thomas's note: At first I thought of setting the correctColor first and then assigning that to one of
-the correctColors items, but I quickly realized that would not be an elegant solution */
+the correctColors items, but I quickly realized that would not be an elegant solution. It's faster to just set the
+correctColor variable to the background color of one of the colored squares */
 
 //checks to see if the item clicked corresponds to the correctColor variable;
 function checkColor() {
 	if (gameOn) {
-		if (this.style.background===correctColor){
+		if (this.style.backgroundColor===correctColor){
 			console.log("winner");
 			this.classList.add("winner");	//adds .winner class which gives the div a nice glow
 			gameOn=false;	//turns game off
@@ -75,11 +75,12 @@ function removeClasses() {
 	}
 }
 
+//initializes the game
 function init() {
 	gameOn=true;
 	colorContainer.innerHTML=""; //removes the color divs
-	createColorSquares(); //creates the color squares
-	removeClasses(); //removed any .winner or .loser classes
+	createColorSquares(); //creates the divs
+	removeClasses(); //removes any .winner or .loser classes
 	setRGBforAll(); // sets background colors for color divs
 	setCorrectColor(); // sets correctColor variable
 	makeColorsClickable(); //gives event listeners to all color squares
