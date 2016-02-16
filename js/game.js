@@ -2,6 +2,7 @@ var correctColor = null;
 var gameOn = true;
 var colorAmt = 6; 
 var colorSquares = null; //this will become a node list when the createColorSquares function is initialized;
+var header = document.getElementsByTagName("header")[0]; //header
 var colorContainer=document.getElementById("colorContainer"); //this is where the colorDivs will be put in
 var correctColorHTML = document.getElementById("correctColor"); //this is where the correct color will be printed
 var difficultyList = document.getElementsByClassName("difficulty"); //this stores a nodelist of the easy,medium,hard buttons
@@ -58,6 +59,12 @@ function checkColor() {
 		if (this.style.backgroundColor===correctColor){
 			console.log("winner");
 			this.classList.add("winner");	//adds .winner class which gives the div a nice glow
+			for (i=0;i<colorSquares.length;i++){  //for all the colored squares...
+				colorSquares[i].style.background=correctColor; //set the background to the winning color
+				colorSquares[i].style.opacity="1.0"; //set opacity to 1.0;
+				colorSquares[i].style.cursor="default";	//set the mouse cursor to default
+			}
+		header.style.background=correctColor;
 			gameOn=false;	//turns game off
 		} else {
 			this.classList.add("loser"); //maybe not the most elegant solution(loser class changes opacity to 0 instead of disappear div);
@@ -124,6 +131,7 @@ hardBtn.addEventListener("click", function() {
 function init() {
 	gameOn=true;
 	colorContainer.innerHTML=""; //removes the color divs
+	header.style.background="#4d4d4d"; // sets header background color to its original color
 	createColorSquares(); //creates the divs
 	removeClasses(); //removes any .winner or .loser classes
 	setRGBforAll(); // sets background colors for color divs
