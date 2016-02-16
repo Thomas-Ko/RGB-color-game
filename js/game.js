@@ -57,7 +57,6 @@ correctColor variable to the background color of one of the colored squares */
 function checkColor() {
 	if (gameOn) {
 		if (this.style.backgroundColor===correctColor){
-			console.log("winner");
 			this.classList.add("winner");	//adds .winner class which gives the div a nice glow
 			for (i=0;i<colorSquares.length;i++){  //for all the colored squares...
 				colorSquares[i].style.background=correctColor; //set the background to the winning color
@@ -68,7 +67,6 @@ function checkColor() {
 			gameOn=false;	//turns game off
 		} else {
 			this.classList.add("loser"); //maybe not the most elegant solution(loser class changes opacity to 0 instead of disappear div);
-			console.log("false");
 		}
 	}
 }
@@ -101,12 +99,10 @@ this.classList.add("btn-selected");  ] but that wouldn't work because the select
 event listener, and the this would be pointing outside of the scope I wanted. Had I not included this selectBtn function inside of another function and instead just used 
 selectBtn as the function for the event listener [so it would look something like   easyBtn.addEventListener("click",selectBtn); ], I could've actually used 
 the this keyword how I wanted and not have to use a parameter but I can't do that since I still have to run the other functions on the click event. Using the parameter was 
-an easy solution. Boy, was this note a tad too long.*/
+an easy solution. And this note was a tad too long.*/
 
 
 //Event Listeners for buttons
-newGameButton.addEventListener("click",init);
-
 easyBtn.addEventListener("click", function() {
 	var newthis = this;
 	colorAmt=3;	
@@ -125,6 +121,8 @@ hardBtn.addEventListener("click", function() {
 	selectBtn(hardBtn);
 	init();
 });
+
+newGameButton.addEventListener("click",init);
 
 
 //initializes the game
